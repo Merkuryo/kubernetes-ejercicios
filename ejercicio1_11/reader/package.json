@@ -1,0 +1,12 @@
+{
+  "name": "reader",
+  "version": "1.0.0",
+  "description": "Reader application that reads from shared volume",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reader-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reader
+  template:
+    metadata:
+      labels:
+        app: reader
+    spec:
+      containers:
+      - name: reader
+        image: reader:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: shared-data
+          mountPath: /usr/src/app/data
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reader-svc
+spec:
+  type: NodePort
+  selector:
+    app: reader
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 30000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reader-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /reader
+        pathType: Prefix
+        backend:
+          service:
+            name: reader-svc
+            port:
+              number: 80

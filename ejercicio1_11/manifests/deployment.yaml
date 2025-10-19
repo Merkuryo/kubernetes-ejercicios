@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      volumes:
+        - name: shared-log
+          persistentVolumeClaim:
+            claimName: image-claim
+      containers:
+        - name: log-writer
+          image: writer:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3001
+          volumeMounts:
+            - name: shared-log
+              mountPath: /usr/src/app/data
+        - name: log-reader
+          image: reader:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: shared-log
+              mountPath: /usr/src/app/data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30000
+      name: reader
+    - port: 3001
+      targetPort: 3001
+      nodePort: 30001
+      name: writer
+  selector:
+    app: app
