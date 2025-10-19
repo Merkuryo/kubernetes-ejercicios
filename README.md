@@ -22,5 +22,6 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [1.12](ejercicio1_12) | Image Caching | [v1.12](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.12) |
 | [1.13](ejercicio1_13) | TODO App | [v1.13](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.13) |
 | [2.1](ejercicio2_1) | Pod-to-Pod Communication | [v2.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.1) |
+| [2.2](ejercicio2_2) | Todo Backend Service | [v2.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.2) |
 
 
