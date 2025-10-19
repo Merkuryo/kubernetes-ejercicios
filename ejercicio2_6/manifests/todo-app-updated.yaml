@@ -15,17 +15,14 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: todo-app-app
+        image: todo-app-app:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 3000
-        # Inyectar TODOS_BACKEND desde variable de entorno
-        env:
-        - name: TODOS_BACKEND
-          valueFrom:
-            configMapKeyRef:
-              name: project-config
-              key: TODOS_BACKEND
+        # Inyectar variables del ConfigMap
+        envFrom:
+        - configMapRef:
+            name: project-config
 ---
 apiVersion: v1
 kind: Service

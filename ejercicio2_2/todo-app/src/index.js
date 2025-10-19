@@ -26,6 +26,8 @@ app.get('/', async (req, res) => {
     const response = await axios.get(`${BACKEND_URL}/todos`, { timeout: 5000 });
     const todos = response.data;
 
+    // Pass BACKEND_URL to client as a script variable
+    const clientBackendUrl = BACKEND_URL;
     const html = `
       <!DOCTYPE html>
       <html>
@@ -305,7 +307,7 @@ app.get('/', async (req, res) => {
         </div>
 
         <script>
-          const BACKEND_URL = 'http://todo-backend-svc:3000';
+          const BACKEND_URL = '${clientBackendUrl}';
           let pingCount = 0;
 
           // Update character counter

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: project
+  name: project-config
+data:
+  # Todo Backend Service URL
+  TODOS_BACKEND: "http://todo-backend-svc:3000"
+  
+  # Log output configuration
+  LOG_OUTPUT_MESSAGE: "Project Application"
+  
+  # Image cache duration (in minutes)
+  IMAGE_CACHE_DURATION: "10"
