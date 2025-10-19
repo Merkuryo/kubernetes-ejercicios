@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wiki-todo-generator
+  namespace: project
+spec:
+  # Ejecutar cada hora en el minuto 0
+  # Formato: minuto hora día mes día-semana
+  schedule: "0 * * * *"
+  
+  # Configuración de retry
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  
+  jobTemplate:
+    spec:
+      # Timeout de 5 minutos para completar el job
+      activeDeadlineSeconds: 300
+      
+      template:
+        spec:
+          # No reintentar si falla
+          restartPolicy: Never
+          
+          containers:
+          - name: wiki-todo
+            image: wiki-todo-app:latest
+            imagePullPolicy: Never
+            
+            # Variables de entorno
+            env:
+            - name: BACKEND_URL
+              value: "http://todo-backend-db-svc:3000"
+            
+            # Recursos
+            resources:
+              requests:
+                cpu: 100m
+                memory: 64Mi
+              limits:
+                cpu: 500m
+                memory: 256Mi
