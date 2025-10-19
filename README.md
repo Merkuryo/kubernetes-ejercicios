@@ -30,5 +30,6 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [2.7](ejercicio2_7) | StatefulSets with PostgreSQL | [v2.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.7) |
 | [2.8](ejercicio2_8) | TODO App with Database | [v2.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.8) |
 | [2.9](ejercicio2_9) | CronJobs - Wikipedia TODOs | [v2.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.9) |
+| [2.10](ejercicio2_10) | Monitoring with Prometheus & Grafana & Loki | [v2.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.10) |
 
 
