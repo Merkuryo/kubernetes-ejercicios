@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: exercises
+  name: logoutput-configmap-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput-configmap
+  template:
+    metadata:
+      labels:
+        app: logoutput-configmap
+    spec:
+      containers:
+      - name: logoutput
+        image: logoutput-configmap-app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        # Inyectar la variable MESSAGE del ConfigMap
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: log-output-config
+              key: MESSAGE
+        volumeMounts:
+        # Montar el ConfigMap como volumen
+        - name: config-volume
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: log-output-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: exercises
+  name: logoutput-configmap-svc
+spec:
+  type: NodePort
+  selector:
+    app: logoutput-configmap
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30004
