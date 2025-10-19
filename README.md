@@ -12,3 +12,6 @@
 ### Parte 2
 - [1.6](https://github.com/Merkuryo/kubernetes-ejercicios/tree/1.6) - Todo Application with NodePort Service
 - [1.7](https://github.com/Merkuryo/kubernetes-ejercicios/tree/1.7) - Log Output with HTTP Endpoint and Ingress
+- [1.8](https://github.com/Merkuryo/kubernetes-ejercicios/tree/1.8) - Todo Application with Ingress
+- [1.9](https://github.com/Merkuryo/kubernetes-ejercicios/tree/1.9) - Multi-service Setup with Shared Ingress
+- [1.10](https://github.com/Merkuryo/kubernetes-ejercicios/tree/1.10) - Log Output with Shared Volume
