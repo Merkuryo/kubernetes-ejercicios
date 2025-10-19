@@ -9,6 +9,27 @@ const PORT = 3000;
 app.use(express.json());
 app.use(cors());
 
+// Request logging middleware
+app.use((req, res, next) => {
+  const startTime = Date.now();
+  const originalJson = res.json;
+  
+  res.json = function(data) {
+    const duration = Date.now() - startTime;
+    const timestamp = new Date().toISOString();
+    const method = req.method;
+    const path = req.path;
+    const status = res.statusCode;
+    const body = JSON.stringify(req.body);
+    
+    console.log(`[${timestamp}] ${method} ${path} | Status: ${status} | Body: ${body} | Duration: ${duration}ms`);
+    
+    return originalJson.call(this, data);
+  };
+  
+  next();
+});
+
 // Configuración de PostgreSQL desde variables de entorno
 const pool = new Pool({
   user: process.env.DB_USER || 'todos_user',
@@ -78,7 +99,6 @@ app.get('/todos', async (req, res) => {
     }));
     client.release();
     
-    console.log(`[${new Date().toISOString()}] GET /todos - Returning ${todos.length} todos`);
     res.json(todos);
   } catch (err) {
     console.error('Error fetching todos:', err.message);
@@ -92,12 +112,10 @@ app.post('/todos', async (req, res) => {
 
   // Validate content
   if (!content || typeof content !== 'string') {
-    console.log(`[${new Date().toISOString()}] POST /todos - Invalid content`);
     return res.status(400).json({ error: 'Content is required and must be a string' });
   }
 
   if (content.length > 140) {
-    console.log(`[${new Date().toISOString()}] POST /todos - Content exceeds 140 characters`);
     return res.status(400).json({ error: 'Content must not exceed 140 characters' });
   }
 
@@ -114,7 +132,6 @@ app.post('/todos', async (req, res) => {
     };
     client.release();
 
-    console.log(`[${new Date().toISOString()}] POST /todos - Created todo: ${newTodo.content}`);
     res.status(201).json(newTodo);
   } catch (err) {
     console.error('Error creating todo:', err.message);
