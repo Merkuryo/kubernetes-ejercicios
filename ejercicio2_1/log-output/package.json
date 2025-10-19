@@ -1,0 +1,16 @@
+{
+  "name": "log-output-app",
+  "version": "1.0.0",
+  "description": "Log output application that queries ping pong app via HTTP",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0"
+  }
+}

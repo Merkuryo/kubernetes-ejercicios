@@ -1,0 +1,15 @@
+{
+  "name": "ping-pong-app",
+  "version": "1.0.0",
+  "description": "Ping pong application that exposes HTTP endpoint with counter",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
