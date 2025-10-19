@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todos-db-config
+  namespace: project
+data:
+  DB_HOST: "todos-db-stset-0.todos-db-svc"
+  DB_PORT: "5432"
+  DB_NAME: "todos_db"
+  DB_USER: "todos_user"
