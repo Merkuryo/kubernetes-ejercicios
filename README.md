@@ -27,5 +27,6 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [2.4](ejercicio2_4) | Project Namespace | [v2.4](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.4) |
 | [2.5](ejercicio2_5) | ConfigMaps | [v2.5](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.5) |
 | [2.6](ejercicio2_6) | ConfigMaps - No Hardcoded Values | [v2.6](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.6) |
+| [2.7](ejercicio2_7) | StatefulSets with PostgreSQL | [v2.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.7) |
 
 
