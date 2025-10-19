@@ -24,5 +24,6 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [2.1](ejercicio2_1) | Pod-to-Pod Communication | [v2.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.1) |
 | [2.2](ejercicio2_2) | Todo Backend Service | [v2.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.2) |
 | [2.3](ejercicio2_3) | Namespaces | [v2.3](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.3) |
+| [2.4](ejercicio2_4) | Project Namespace | [v2.4](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.4) |
 
 
