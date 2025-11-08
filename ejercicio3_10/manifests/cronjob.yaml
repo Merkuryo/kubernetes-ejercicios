@@ -1,0 +1,97 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+spec:
+  # Run every day at 2 AM UTC (adjust as needed)
+  schedule: "0 2 * * *"
+  
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: postgres-backup-sa
+          
+          containers:
+          - name: pg-backup
+            image: google/cloud-sdk:latest
+            command:
+            - /bin/bash
+            - -c
+            - |
+              #!/bin/bash
+              set -e
+              
+              # Setup Google Cloud authentication
+              export GOOGLE_APPLICATION_CREDENTIALS=/var/secrets/gcs/credentials.json
+              gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+              
+              # Database connection info (from todo-app)
+              DB_HOST="postgres-svc"
+              DB_PORT="5432"
+              DB_NAME="todos"
+              DB_USER="postgres"
+              DB_PASSWORD="$(cat /run/secrets/postgres-password)"
+              
+              # Create backup filename with timestamp
+              BACKUP_FILE="postgres-backup-$(date +%Y%m%d-%H%M%S).sql"
+              
+              echo "Starting backup of database: $DB_NAME"
+              
+              # Create backup using pg_dump
+              PGPASSWORD="$DB_PASSWORD" pg_dump \
+                -h "$DB_HOST" \
+                -p "$DB_PORT" \
+                -U "$DB_USER" \
+                -d "$DB_NAME" \
+                --verbose \
+                > "/tmp/$BACKUP_FILE"
+              
+              echo "Backup file size: $(du -h /tmp/$BACKUP_FILE | cut -f1)"
+              
+              # Upload to Google Cloud Storage
+              echo "Uploading backup to gs://dwk-postgres-backups/$BACKUP_FILE"
+              gsutil cp "/tmp/$BACKUP_FILE" "gs://dwk-postgres-backups/$BACKUP_FILE"
+              
+              # Verify upload
+              if gsutil ls "gs://dwk-postgres-backups/$BACKUP_FILE" > /dev/null; then
+                echo "✅ Backup successfully uploaded to GCS"
+                # Optional: Clean up local file
+                rm "/tmp/$BACKUP_FILE"
+              else
+                echo "❌ Failed to upload backup to GCS"
+                exit 1
+              fi
+              
+              echo "Backup completed successfully at $(date)"
+            
+            env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: password
+            
+            # Mount GCS credentials
+            volumeMounts:
+            - name: gcs-credentials
+              mountPath: /var/secrets/gcs
+              readOnly: true
+            
+            # Resource limits
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "250m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+          
+          # Restart policy for failed jobs
+          restartPolicy: OnFailure
+          
+          volumes:
+          - name: gcs-credentials
+            secret:
+              secretName: gcs-credentials
+              defaultMode: 0400
