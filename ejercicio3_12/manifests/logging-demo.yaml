@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todo-logger-example
+  namespace: default
+spec:
+  containers:
+  - name: todo-logger
+    image: curlimages/curl:latest
+    command: ["/bin/sh"]
+    args:
+      - -c
+      - |
+        echo "Pod iniciado para demostrar logging en GKE"
+        echo '{"timestamp":"'$(date -Iseconds)'","level":"INFO","action":"POD_STARTED","pod":"todo-logger-example"}' 
+        sleep 2
+        echo '{"timestamp":"'$(date -Iseconds)'","level":"INFO","action":"TODO_CREATED","todo_id":1,"todo_title":"Complete Exercise 3.12"}'
+        sleep 2
+        echo '{"timestamp":"'$(date -Iseconds)'","level":"INFO","action":"TODO_UPDATED","todo_id":1,"status":"completed"}'
+        sleep infinity
+  restartPolicy: Never
