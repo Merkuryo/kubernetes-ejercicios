@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpong-db-svc
+spec:
+  clusterIP: None
+  selector:
+    app: postgres-pingpong
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pingpong-db
+spec:
+  serviceName: pingpong-db-svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-pingpong
+  template:
+    metadata:
+      labels:
+        app: postgres-pingpong
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: POSTGRES_DB
+              value: "pingpong_db"
+            - name: POSTGRES_USER
+              value: "pingpong_user"
+            - name: POSTGRES_PASSWORD
+              value: "pingpong_password_123"
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pg_isready -U pingpong_user -d pingpong_db
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pg_isready -U pingpong_user -d pingpong_db
+            initialDelaySeconds: 10
+            periodSeconds: 5
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
