@@ -1,0 +1,53 @@
+name: Cleanup environment on branch delete
+
+on:
+  delete:
+
+jobs:
+  cleanup:
+    name: Delete namespace when branch is deleted
+    runs-on: ubuntu-latest
+    
+    # Only run if a branch (not a tag) is deleted
+    if: github.event.ref_type == 'branch'
+    
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+      
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+      
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: 'dwk-cluster'
+          project_id: '${{ secrets.GKE_PROJECT }}'
+          location: 'europe-north1-b'
+      
+      - name: Determine namespace and delete
+        run: |
+          BRANCH=${{ github.event.ref }}
+          
+          # Don't delete production namespace
+          if [ "$BRANCH" = "main" ]; then
+            echo "🛡️ Protecting production namespace 'project' - skipping deletion"
+            exit 0
+          fi
+          
+          # For feature/bugfix branches, delete the namespace
+          NAMESPACE=$BRANCH
+          echo "🗑️ Deleting namespace: $NAMESPACE"
+          
+          # Delete namespace (returns success even if namespace doesn't exist)
+          kubectl delete namespace $NAMESPACE --ignore-not-found=true
+          
+          # Verify deletion
+          if kubectl get namespace $NAMESPACE 2>/dev/null; then
+            echo "⚠️ Namespace still exists, waiting for deletion..."
+            kubectl wait --for=condition=terminating --timeout=60s -l metadata.name=$NAMESPACE ns $NAMESPACE || true
+          else
+            echo "✅ Namespace $NAMESPACE successfully deleted"
+          fi
