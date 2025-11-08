@@ -1,0 +1,2 @@
+# This directory contains workflow configuration for Exercise 3.8
+# The cleanup workflow is located in: .github/workflows/cleanup.yaml

@@ -38,6 +38,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [3.5](ejercicio3_5) | Kustomize Deployment to GKE | [v3.5](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.5) |
 | [3.6](ejercicio3_6) | GitHub Actions CI/CD Pipeline | [v3.6](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.6) |
 | [3.7](ejercicio3_7) | Branch-per-namespace Deployment | [v3.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.7) |
+| [3.8](ejercicio3_8) | Cleanup Workflow on Branch Delete | [v3.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.8) |
 
 
 
