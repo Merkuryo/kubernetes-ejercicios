@@ -1,0 +1,2 @@
+# This directory contains manifests for Exercise 3.7
+# The manifests are generated dynamically per branch via GitHub Actions and Kustomize
