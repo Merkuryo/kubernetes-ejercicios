@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: staging-quota
+  namespace: staging
+spec:
+  hard:
+    requests.cpu: "2"        # Total 2 CPUs in namespace
+    requests.memory: "2Gi"   # Total 2 GB in namespace
+    limits.cpu: "4"          # Total max 4 CPUs
+    limits.memory: "4Gi"     # Total max 4 GB
+    pods: "10"               # Maximum 10 pods
+    services.loadbalancers: "2"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: staging-limits
+  namespace: staging
+spec:
+  limits:
+  - max:
+      cpu: "500m"
+      memory: "512Mi"
+    min:
+      cpu: "10m"
+      memory: "16Mi"
+    default:
+      cpu: "100m"
+      memory: "128Mi"
+    defaultRequest:
+      cpu: "50m"
+      memory: "64Mi"
+    type: Container
+  
+  - max:
+      cpu: "1"
+      memory: "1Gi"
+    min:
+      cpu: "10m"
+      memory: "16Mi"
+    type: Pod

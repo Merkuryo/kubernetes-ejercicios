@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpushredder-dep
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpushredder
+  template:
+    metadata:
+      labels:
+        app: cpushredder
+    spec:
+      containers:
+      - name: cpushredder
+        image: jakousa/dwk-app7:e11a700350aede132b62d3b5fd63c05d6b976394
+        
+        # Resource requests and limits for HPA
+        resources:
+          requests:
+            cpu: "100m"        # Baseline for calculations
+            memory: "64Mi"     # Baseline memory
+          
+          limits:
+            cpu: "500m"        # Maximum: 50% of 1 CPU
+            memory: "256Mi"    # Maximum: 256 MB
+        
+        ports:
+        - containerPort: 3001
+        
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3001
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cpushredder-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: cpushredder
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3001
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cpushredder-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cpushredder-dep
+  
+  minReplicas: 1
+  maxReplicas: 6
+  
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50  # Scale when CPU > 50%
+  
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 30
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60

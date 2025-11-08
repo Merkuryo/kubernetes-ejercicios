@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-web-app
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example-web-app
+  template:
+    metadata:
+      labels:
+        app: example-web-app
+    spec:
+      containers:
+      - name: web-app
+        image: nginx:1.19-alpine
+        
+        # Resource requests and limits
+        resources:
+          requests:
+            cpu: "10m"         # Minimum: 1% of 1 CPU
+            memory: "32Mi"     # Minimum: 32 MB
+          
+          limits:
+            cpu: "100m"        # Maximum: 10% of 1 CPU
+            memory: "64Mi"     # Maximum: 64 MB
+        
+        ports:
+        - containerPort: 80
+        
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-web-app-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: example-web-app
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
