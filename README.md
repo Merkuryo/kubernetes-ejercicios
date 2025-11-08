@@ -34,6 +34,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [3.1](ejercicio3_1) | Ping-pong on Google Kubernetes Engine (GKE) | [v3.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.1) |
 | [3.2](ejercicio3_2) | Ingress with Path-Based Routing on GKE | [v3.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.2) |
 | [3.3](ejercicio3_3) | Gateway API with Path-Based Routing on GKE | [v3.3](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.3) |
+| [3.4](ejercicio3_4) | Rewritten Routing with URLRewrite Filter | [v3.4](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.4) |
 
 
 
