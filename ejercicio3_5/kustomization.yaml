@@ -7,5 +7,5 @@ resources:
 
 images:
   - name: PROJECT/IMAGE
-    newName: gcr.io/dwk-gke-477617/colorcontent
+    newName: PROJECT/IMAGE
     newTag: latest
