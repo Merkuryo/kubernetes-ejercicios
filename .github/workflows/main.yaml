@@ -60,10 +60,35 @@ jobs:
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2.1.0
       
+      - name: Determine namespace
+        id: namespace
+        run: |
+          BRANCH=${{ github.ref_name }}
+          if [ "$BRANCH" = "main" ]; then
+            NAMESPACE=project
+          else
+            NAMESPACE=$BRANCH
+          fi
+          echo "NAMESPACE=$NAMESPACE" >> $GITHUB_OUTPUT
+      
       - name: Deploy to GKE
         run: |
+          NAMESPACE=${{ steps.namespace.outputs.NAMESPACE }}
           cd ejercicio3_5
+          
+          # Create namespace
+          kubectl create namespace $NAMESPACE || true
+          
+          # Set context
+          kubectl config set-context --current --namespace=$NAMESPACE
+          
+          # Update Kustomize with namespace and image
+          kustomize edit set namespace $NAMESPACE
           kustomize edit set image PROJECT/IMAGE=${{ env.IMAGE_TAG }}
+          
+          # Apply manifests
           kustomize build . | kubectl apply -f -
+          
+          # Wait for rollout and display services
           kubectl rollout status deployment ${{ env.SERVICE }}
           kubectl get services -o wide
