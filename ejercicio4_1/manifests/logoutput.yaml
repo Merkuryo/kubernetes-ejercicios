@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: logoutput-svc
+  namespace: readiness-probe
+spec:
+  type: NodePort
+  selector:
+    app: logoutput
+  ports:
+    - port: 80
+      targetPort: 3541
+      nodePort: 30002
+      protocol: TCP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+  namespace: readiness-probe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      containers:
+        # Container 1: log-writer
+        # Writes logs from ping-pong responses
+        - name: log-writer
+          image: mluukkai/dwk-app8:v1
+          ports:
+            - containerPort: 3542
+          env:
+            - name: PINGPONG_URL
+              value: "http://pingpong-svc:3000"
+
+        # Container 2: log-reader (main HTTP server)
+        # Reads logs and serves via HTTP endpoint  
+        - name: log-reader
+          image: mluukkai/dwk-app8:v1
+          ports:
+            - containerPort: 3541
+          # ReadinessProbe: Check if can receive data from ping-pong
+          # This probe will fail until ping-pong is available
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3541
+            initialDelaySeconds: 10
+            periodSeconds: 5
