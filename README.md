@@ -42,6 +42,8 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [3.9](ejercicio3_9) | DBaaS vs DIY: Database Solutions | [v3.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.9) |
 | [3.10](ejercicio3_10) | PostgreSQL Backup to GCS | [v3.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.10) |
 | [3.11](ejercicio3_11) | Resource Requests and Limits | [v3.11](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.11) |
+| [3.12](ejercicio3_12) | GKE Monitoring and Logging | [v3.12](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.12) |
+| [4.1](ejercicio4_1) | Readiness Probes | [v4.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.1) |
 
 
 
