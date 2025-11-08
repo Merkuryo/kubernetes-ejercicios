@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpong-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: pingpong
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-dep
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pingpong
+  template:
+    metadata:
+      labels:
+        app: pingpong
+    spec:
+      containers:
+        - name: pingpong
+          image: nginx:alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: http
+          env:
+            - name: APP_PATH
+              value: "/pingpong"
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
