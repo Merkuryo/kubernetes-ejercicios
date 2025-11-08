@@ -32,5 +32,10 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [2.9](ejercicio2_9) | CronJobs - Wikipedia TODOs | [v2.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.9) |
 | [2.10](ejercicio2_10) | Monitoring with Prometheus & Grafana & Loki | [v2.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v2.10) |
 | [3.1](ejercicio3_1) | Ping-pong on Google Kubernetes Engine (GKE) | [v3.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.1) |
+| [3.2](ejercicio3_2) | Ingress with Path-Based Routing on GKE | [v3.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.2) |
+
+
+
+```
 
 
