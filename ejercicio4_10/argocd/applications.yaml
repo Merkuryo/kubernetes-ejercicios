@@ -1,0 +1,49 @@
+---
+# ArgoCD Application para Staging
+# Apunta al repositorio de configuración (separado del código)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Config repository (separate from app repo)
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios-config
+    path: overlays/staging
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# ArgoCD Application para Production
+# Apunta al repositorio de configuración con tag específico
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-production
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Config repository (separate from app repo)
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios-config
+    path: overlays/prod
+    targetRevision: stable
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

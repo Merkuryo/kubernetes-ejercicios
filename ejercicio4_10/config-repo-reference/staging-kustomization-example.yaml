@@ -1,0 +1,26 @@
+# Ejemplo: kustomization.yaml en config repo staging overlay
+# Ruta: kubernetes-ejercicios-config/overlays/staging/kustomization.yaml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: broadcaster-dep
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/template/spec/containers/0/env/5/value
+        value: "true"
+
+namespace: staging
+namePrefix: staging-
+
+commonLabels:
+  environment: staging
