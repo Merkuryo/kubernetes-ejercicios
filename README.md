@@ -52,6 +52,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [4.7](ejercicio4_7) | Baby Steps to GitOps with ArgoCD | [v4.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.7) |
 | [4.8](ejercicio4_8) | The Project Step 24 - GitOps | [v4.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.8) |
 | [4.9](ejercicio4_9) | The Project Step 25 - Multi-environment with Kustomize | [v4.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.9) |
+| [4.10](ejercicio4_10) | The Project Step 26 - Grande Finale (Separate Repos) | [v4.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.10) |
 
 
 ```
