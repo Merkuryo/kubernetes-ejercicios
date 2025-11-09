@@ -1,0 +1,171 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wikipedia-pod
+  namespace: default
+  labels:
+    app: wikipedia
+spec:
+  # Init container runs before main containers start
+  initContainers:
+  - name: wikipedia-init
+    image: nginx:alpine
+    command:
+      - /bin/sh
+      - -c
+      - |
+        # Install curl if not present
+        apk add --no-cache curl
+        
+        echo "🔄 Init Container: Fetching Kubernetes Wikipedia page..."
+        
+        # Fetch Kubernetes Wikipedia page
+        curl -L "https://en.wikipedia.org/wiki/Kubernetes" \
+          -o /www/Kubernetes.html \
+          --max-time 30 \
+          -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+          2>&1
+        
+        if [ $? -eq 0 ]; then
+          FILE_SIZE=$(stat -f%z /www/Kubernetes.html 2>/dev/null || stat -c%s /www/Kubernetes.html 2>/dev/null)
+          echo "✅ Success! Kubernetes page saved (${FILE_SIZE} bytes)"
+        else
+          echo "❌ Failed to fetch Kubernetes page"
+          # Create a placeholder
+          echo '<html><body><h1>Failed to fetch Kubernetes page</h1></body></html>' > /www/Kubernetes.html
+        fi
+    
+    volumeMounts:
+    - name: www
+      mountPath: /www
+    
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+  # Main container: nginx serving pages
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+      name: http
+    
+    volumeMounts:
+    - name: www
+      mountPath: /usr/share/nginx/html
+    
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 10
+      periodSeconds: 10
+    
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+  # Sidecar container: periodically fetches random Wikipedia pages
+  - name: wikipedia-sidecar
+    image: nginx:alpine
+    command:
+      - /bin/sh
+      - -c
+      - |
+        # Install curl
+        apk add --no-cache curl
+        
+        echo "🚀 Sidecar Container: Starting Wikipedia page fetcher..."
+        echo "📅 Fetching a new random Wikipedia page every 5-15 minutes"
+        
+        # Infinite loop fetching random pages
+        while true; do
+          # Random sleep between 5 and 15 minutes
+          SLEEP_TIME=$((RANDOM % 600 + 300))  # 300-900 seconds = 5-15 minutes
+          SLEEP_MIN=$((SLEEP_TIME / 60))
+          SLEEP_SEC=$((SLEEP_TIME % 60))
+          
+          echo "⏱️  Waiting ${SLEEP_MIN}m ${SLEEP_SEC}s before fetching next page..."
+          sleep $SLEEP_TIME
+          
+          # Fetch a random Wikipedia page
+          RANDOM_PAGE=$(curl -s "https://en.wikipedia.org/wiki/Special:Random" \
+            -L -w "%{redirect_url}" -o /dev/null \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+          
+          if [ -z "$RANDOM_PAGE" ]; then
+            echo "⚠️  Failed to get redirect URL, trying alternative method..."
+            RANDOM_PAGE=$(curl -s -I "https://en.wikipedia.org/wiki/Special:Random" \
+              -H "User-Agent: Mozilla/5.0" | grep -i location | cut -d' ' -f2)
+          fi
+          
+          if [ -z "$RANDOM_PAGE" ]; then
+            echo "❌ Could not fetch random page URL"
+            continue
+          fi
+          
+          # Extract page title from URL (last part after /wiki/)
+          PAGE_TITLE=$(echo "$RANDOM_PAGE" | sed 's/.*\/wiki\///' | tr '/' '_')
+          PAGE_TITLE="${PAGE_TITLE:0:50}"  # Limit to 50 chars
+          
+          if [ -z "$PAGE_TITLE" ]; then
+            PAGE_TITLE="Random_$(date +%s)"
+          fi
+          
+          FILE_NAME="/www/Random_${PAGE_TITLE}.html"
+          
+          echo "🔄 Fetching random page: $PAGE_TITLE"
+          
+          # Fetch the page with timeout
+          curl -L "$RANDOM_PAGE" \
+            -o "$FILE_NAME" \
+            --max-time 30 \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            2>&1
+          
+          if [ $? -eq 0 ]; then
+            FILE_SIZE=$(stat -f%z "$FILE_NAME" 2>/dev/null || stat -c%s "$FILE_NAME" 2>/dev/null)
+            TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+            echo "✅ [$TIMESTAMP] Saved $PAGE_TITLE (${FILE_SIZE} bytes)"
+          else
+            echo "❌ Failed to fetch $PAGE_TITLE"
+            rm -f "$FILE_NAME"
+          fi
+        done
+    
+    volumeMounts:
+    - name: www
+      mountPath: /www
+    
+    # Sidecar doesn't need probes, runs in background
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+
+  # Shared volume for all containers
+  volumes:
+  - name: www
+    emptyDir: {}
+
+  # Restart policy
+  restartPolicy: Always
