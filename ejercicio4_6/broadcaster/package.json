@@ -1,0 +1,17 @@
+{
+  "name": "todo-broadcaster",
+  "version": "1.0.0",
+  "description": "TODO Broadcaster - sends TODO events to external services",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "nats": "^1.5.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

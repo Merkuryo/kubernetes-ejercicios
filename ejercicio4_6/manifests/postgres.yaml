@@ -1,0 +1,91 @@
+# PostgreSQL StatefulSet
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+type: Opaque
+stringData:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-script
+          configMap:
+            name: postgres-init
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+data:
+  init.sql: |
+    CREATE TABLE IF NOT EXISTS todos (
+      id SERIAL PRIMARY KEY,
+      content VARCHAR(140) NOT NULL,
+      done BOOLEAN DEFAULT FALSE,
+      created TIMESTAMP DEFAULT NOW(),
+      updated TIMESTAMP DEFAULT NOW()
+    );

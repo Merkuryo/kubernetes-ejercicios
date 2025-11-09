@@ -1,0 +1,22 @@
+# NATS Helm Values - Save as nats-values.yaml
+# then run: helm install my-nats bitnami/nats -f nats-values.yaml
+
+auth:
+  enabled: false
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    namespace: prometheus
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 4222
+
+ports:
+  client: 4222
+  monitoring: 8222
+  metrics: 7777

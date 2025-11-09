@@ -1,0 +1,52 @@
+# Broadcaster Deployment - Scalable with 6 replicas
+# Uses queue group subscription to ensure no duplicate messages
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster-dep
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster
+          image: todo-broadcaster:latest
+          imagePullPolicy: Never
+          env:
+            - name: NATS_URL
+              value: nats://my-nats:4222
+            - name: EXTERNAL_SERVICE_TYPE
+              value: generic  # Change to: discord, telegram, slack, generic
+            # For Discord webhook:
+            # - name: DISCORD_WEBHOOK_URL
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: broadcaster-secrets
+            #       key: DISCORD_WEBHOOK_URL
+            # For Telegram:
+            # - name: TELEGRAM_BOT_TOKEN
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: broadcaster-secrets
+            #       key: TELEGRAM_BOT_TOKEN
+            # - name: TELEGRAM_CHAT_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: broadcaster-secrets
+            #       key: TELEGRAM_CHAT_ID
+            # For Slack:
+            # - name: SLACK_WEBHOOK_URL
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: broadcaster-secrets
+            #       key: SLACK_WEBHOOK_URL
+            # For Generic service:
+            - name: EXTERNAL_SERVICE_URL
+              value: http://external-service:3001/messages
