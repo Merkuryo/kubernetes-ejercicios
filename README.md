@@ -44,6 +44,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [3.11](ejercicio3_11) | Resource Requests and Limits | [v3.11](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.11) |
 | [3.12](ejercicio3_12) | GKE Monitoring and Logging | [v3.12](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v3.12) |
 | [4.1](ejercicio4_1) | Readiness Probes | [v4.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.1) |
+| [4.2](ejercicio4_2) | Readiness & Liveness Probes (The Project) | [v4.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.2) |
 
 
 
