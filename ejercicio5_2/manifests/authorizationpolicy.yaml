@@ -1,0 +1,20 @@
+# NetworkPolicy for Istio ambient mode - L4 authorization
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-traffic
+  namespace: default
+spec:
+  rules:
+  # Allow productpage to receive traffic from ingress gateway
+  - to:
+    - operation:
+        ports: ["9080"]
+  # Allow all traffic within the mesh (can be restricted as needed)
+  # This is L7 authorization - requires waypoint proxy for enforcement
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/default"]
+    to:
+    - operation:
+        methods: ["GET"]
