@@ -51,6 +51,13 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [4.6](ejercicio4_6) | The Project Step 23 - NATS Broadcaster | [v4.6](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.6) |
 | [4.7](ejercicio4_7) | Baby Steps to GitOps with ArgoCD | [v4.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.7) |
 | [4.8](ejercicio4_8) | The Project Step 24 - GitOps | [v4.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.8) |
+| [4.9](ejercicio4_9) | The Project Step 25 - Multi-environment with Kustomize | [v4.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.9) |
+
+
+```
+
+
+````
 
 
 ```
