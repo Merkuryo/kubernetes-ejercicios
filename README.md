@@ -49,6 +49,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [4.4](ejercicio4_4) | Canary Release with Argo Rollouts | [v4.4](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.4) |
 | [4.5](ejercicio4_5) | The Project Step 22 - Done Field | [v4.5](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.5) |
 | [4.6](ejercicio4_6) | The Project Step 23 - NATS Broadcaster | [v4.6](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.6) |
+| [4.7](ejercicio4_7) | Baby Steps to GitOps with ArgoCD | [v4.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.7) |
 
 
 ```
