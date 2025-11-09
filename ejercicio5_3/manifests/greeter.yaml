@@ -1,0 +1,236 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeter-dep-v1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeter
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: greeter
+        version: v1
+    spec:
+      containers:
+        - name: greeter
+          image: node:18-alpine
+          command:
+            - sh
+            - -c
+            - |
+              cd /app
+              npm install
+              npm start
+          env:
+            - name: VERSION
+              value: "v1"
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          volumeMounts:
+            - name: greeter-code
+              mountPath: /app
+      volumes:
+        - name: greeter-code
+          configMap:
+            name: greeter-code
+            defaultMode: 0755
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeter-dep-v2
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeter
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: greeter
+        version: v2
+    spec:
+      containers:
+        - name: greeter
+          image: node:18-alpine
+          command:
+            - sh
+            - -c
+            - |
+              cd /app
+              npm install
+              npm start
+          env:
+            - name: VERSION
+              value: "v2"
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          volumeMounts:
+            - name: greeter-code
+              mountPath: /app
+      volumes:
+        - name: greeter-code
+          configMap:
+            name: greeter-code
+            defaultMode: 0755
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: greeter-code
+  namespace: default
+data:
+  app.js: |
+    const express = require('express');
+    const app = express();
+    const PORT = 8080;
+    const VERSION = process.env.VERSION || 'v1';
+    const GREETINGS = {
+      v1: ['Hello, World!', 'Hi there!', 'Welcome!', 'Good to see you!'],
+      v2: ['Hola, Mundo!', '¡Hola!', '¡Bienvenido!', '¡Qué gusto verte!']
+    };
+    app.get('/health', (req, res) => {
+      res.status(200).json({ 
+        status: 'healthy',
+        version: VERSION 
+      });
+    });
+    app.get('/greeting', (req, res) => {
+      const greetingList = GREETINGS[VERSION] || GREETINGS.v1;
+      const greeting = greetingList[Math.floor(Math.random() * greetingList.length)];
+      console.log(\`[\${VERSION}] Serving greeting: \${greeting}\`);
+      res.json({ 
+        greeting: greeting,
+        version: VERSION,
+        timestamp: new Date().toISOString()
+      });
+    });
+    app.get('/version', (req, res) => {
+      res.json({ version: VERSION });
+    });
+    app.listen(PORT, () => {
+      console.log(\`Greeter \${VERSION} listening on port \${PORT}\`);
+    });
+  package.json: |
+    {
+      "name": "greeter",
+      "version": "1.0.0",
+      "description": "Greeter service for Istio canary deployment demo",
+      "main": "app.js",
+      "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js"
+      },
+      "keywords": ["kubernetes", "istio", "greeter"],
+      "author": "",
+      "license": "ISC",
+      "dependencies": {
+        "express": "^4.18.2"
+      },
+      "devDependencies": {
+        "nodemon": "^3.0.1"
+      }
+    }
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter-svc-v1
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: greeter
+    version: v1
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter-svc-v2
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: greeter
+    version: v2
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter-svc
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: greeter
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080

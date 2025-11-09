@@ -1,0 +1,19 @@
+{
+  "name": "greeter",
+  "version": "1.0.0",
+  "description": "Greeter service for Istio canary deployment demo",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": ["kubernetes", "istio", "greeter"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
