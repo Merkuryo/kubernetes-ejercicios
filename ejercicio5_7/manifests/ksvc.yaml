@@ -1,0 +1,134 @@
+# Ping-Pong Serverless Knative Service
+# This manifests converts the ping-pong application into a serverless service
+# The application follows the Knative Runtime Contract:
+# - Stateless: No local state dependencies
+# - Configurable: Uses PORT environment variable
+# - Graceful shutdown: Handles SIGTERM
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ping-pong-serverless
+  namespace: default
+  labels:
+    app: ping-pong
+    version: serverless
+spec:
+  # Template defines the deployment configuration
+  template:
+    metadata:
+      name: ping-pong-v1
+      labels:
+        version: v1
+      annotations:
+        # Autoscaling configuration
+        autoscaling.knative.dev/minScale: "1"          # Keep at least 1 instance
+        autoscaling.knative.dev/maxScale: "10"         # Max 10 instances
+        autoscaling.knative.dev/metric: "rps"          # Scale by requests per second
+        autoscaling.knative.dev/target: "50"           # Scale at 50 requests/sec per pod
+        
+        # Performance tuning
+        autoscaling.knative.dev/scaleDownDelay: "60s"  # Wait 60s before scaling down
+        autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "300s"  # Keep pod 5 min after scale-to-zero
+    
+    spec:
+      # Container specification
+      containers:
+      - name: ping-pong
+        # Image: use your registry here
+        # For local testing with k3d, you can build and load the image
+        image: ping-pong-serverless:latest
+        imagePullPolicy: IfNotPresent
+        
+        # Port configuration (Knative standard)
+        ports:
+        - name: http1
+          containerPort: 8080
+          protocol: TCP
+        
+        # Environment variables
+        env:
+        - name: PORT
+          value: "8080"
+        - name: NODE_ENV
+          value: "production"
+        - name: INSTANCE_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        
+        # Resource management
+        resources:
+          requests:
+            cpu: "50m"        # Minimal CPU for serverless
+            memory: "128Mi"   # Minimal memory
+          limits:
+            cpu: "500m"       # Allow burst to 500m
+            memory: "512Mi"   # Max 512Mi
+        
+        # Startup probe - waits for app to be ready
+        startupProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 3
+        
+        # Liveness probe - checks if app is still alive
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 3
+        
+        # Readiness probe - checks if app can handle traffic
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 3
+          timeoutSeconds: 1
+          failureThreshold: 2
+      
+      # Pod-level configuration
+      timeoutSeconds: 300  # 5 minutes timeout for requests
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30  # 30 seconds for graceful shutdown
+  
+  # Traffic configuration
+  traffic:
+  - latestRevision: true
+    percent: 100
+---
+# Alternatively, simpler version without resource limits for development
+# Uncomment below and comment out the above Service for development
+---
+# apiVersion: serving.knative.dev/v1
+# kind: Service
+# metadata:
+#   name: ping-pong-dev
+#   namespace: default
+# spec:
+#   template:
+#     spec:
+#       containers:
+#       - image: ping-pong-serverless:latest
+#         imagePullPolicy: IfNotPresent
+#         ports:
+#         - containerPort: 8080
+#         env:
+#         - name: PORT
+#           value: "8080"
