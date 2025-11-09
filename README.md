@@ -1,13 +1,13 @@
 # Kubernetes Exercises
 
-## DevOps with Kubernetes - Ejercicios 🚀
+## DevOps with Kubernetes Course
 
-Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada ejercicio demuestra conceptos clave de Kubernetes.
+Repository of Kubernetes exercises from the "DevOps with Kubernetes" course. Each exercise demonstrates key Kubernetes concepts and cloud-native engineering practices.
 
-## Ejercicios
+## Exercises
 
-| Ejercicio | Título | Release | 
-|-----------|--------|---------|
+| Exercise | Title | Release | 
+|----------|-------|---------|
 | [1.1](ejercicio1_1) | Log Output Application | [v1.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.1) |
 | [1.2](ejercicio1_2) | Todo Application | [v1.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.2) |
 | [1.3](ejercicio1_3) | Log Output Declarative | [v1.3](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.3) |
@@ -17,7 +17,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [1.7](ejercicio1_7) | Ingress & Routing | [v1.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.7) |
 | [1.8](ejercicio1_8) | Multi-Service Ingress | [v1.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.8) |
 | [1.9](ejercicio1_9) | Shared Volume | [v1.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.9) |
-| [1.10](ejercicio1_10) | Log Output con Volumen | [v1.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.10) |
+| [1.10](ejercicio1_10) | Log Output with Shared Volume | [v1.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.10) |
 | [1.11](ejercicio1_11) | Persistent Volumes | [v1.11](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.11) |
 | [1.12](ejercicio1_12) | Image Caching | [v1.12](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.12) |
 | [1.13](ejercicio1_13) | TODO App | [v1.13](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v1.13) |
@@ -52,7 +52,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [4.7](ejercicio4_7) | Baby Steps to GitOps with ArgoCD | [v4.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.7) |
 | [4.8](ejercicio4_8) | The Project Step 24 - GitOps | [v4.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.8) |
 | [4.9](ejercicio4_9) | The Project Step 25 - Multi-environment with Kustomize | [v4.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.9) |
-| [4.10](ejercicio4_10) | The Project Step 26 - Grande Finale (Separate Repos) | [v4.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.10) |
+| [4.10](ejercicio4_10) | The Project Step 26 - Grand Finale (Separate Repos) | [v4.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.10) |
 | [5.1](ejercicio5_1) | DIY CRD & Custom Controller | [v5.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.1) |
 | [5.2](ejercicio5_2) | Getting Started with Istio Service Mesh (Ambient Mode) | [v5.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.2) |
 | [5.3](ejercicio5_3) | Log App, the Service Mesh Edition | [v5.3](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.3) |
