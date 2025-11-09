@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: the-project-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: the-project
+  template:
+    metadata:
+      labels:
+        app: the-project
+    spec:
+      containers:
+        - name: the-project
+          image: mluukkai/dwk-app8:v1
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:password@postgres-service:5432/project_db"
+          ports:
+            - containerPort: 3541
+              name: http
+          # ReadinessProbe: Determines if a pod should receive traffic from the Service
+          # The pod will be marked as Ready only when the probe succeeds
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3541
+            initialDelaySeconds: 10      # Wait 10 seconds before the first probe
+            periodSeconds: 5              # Check every 5 seconds
+            failureThreshold: 3           # Mark as not ready after 3 consecutive failures
+            timeoutSeconds: 2             # Timeout for each probe attempt
+          # LivenessProbe: Determines if a container is alive
+          # If the probe fails, Kubernetes will restart the container
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3541
+            initialDelaySeconds: 20      # Wait 20 seconds before the first probe (after app startup)
+            periodSeconds: 5              # Check every 5 seconds
+            failureThreshold: 3           # Restart container after 3 consecutive failures
+            timeoutSeconds: 2             # Timeout for each probe attempt

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: the-project-app-test-broken
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: the-project-broken
+  template:
+    metadata:
+      labels:
+        app: the-project-broken
+    spec:
+      containers:
+        - name: the-project
+          image: mluukkai/dwk-app8:v1
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:wrongpassword@postgres-service:5432/project_db"
+          ports:
+            - containerPort: 3541
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3541
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3541
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 2
