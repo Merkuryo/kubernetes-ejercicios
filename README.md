@@ -54,6 +54,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [4.9](ejercicio4_9) | The Project Step 25 - Multi-environment with Kustomize | [v4.9](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.9) |
 | [4.10](ejercicio4_10) | The Project Step 26 - Grande Finale (Separate Repos) | [v4.10](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v4.10) |
 | [5.1](ejercicio5_1) | DIY CRD & Custom Controller | [v5.1](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.1) |
+| [5.2](ejercicio5_2) | Getting Started with Istio Service Mesh (Ambient Mode) | [v5.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.2) |
 
 
 ```
