@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - postgres-backup.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      name: backend-dep
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+  - target:
+      kind: Deployment
+      name: broadcaster-dep
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 6
+
+namespace: production
+
+namePrefix: prod-
+
+commonLabels:
+  environment: production

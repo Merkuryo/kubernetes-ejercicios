@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios
+    path: ejercicio4_9/overlays/staging
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-production
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios
+    path: ejercicio4_9/overlays/prod
+    targetRevision: stable
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

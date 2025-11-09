@@ -1,0 +1,19 @@
+{
+  "name": "the-project-backend",
+  "version": "1.0.0",
+  "description": "Backend API for The Project",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "pg": "^8.10.0",
+    "nats.js": "^1.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
