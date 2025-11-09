@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpong-service
+  namespace: default
+spec:
+  selector:
+    app: pingpong
+  ports:
+    - port: 3541
+      targetPort: 3541
+      protocol: TCP
+  type: ClusterIP
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: pingpong-rollout
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pingpong
+  strategy:
+    canary:
+      steps:
+      - setWeight: 25
+      - pause:
+          duration: 1m
+      - setWeight: 50
+      - pause:
+          duration: 1m
+      - setWeight: 75
+      - pause:
+          duration: 1m
+      - analysis:
+          templates:
+          - templateName: cpu-usage-analysis
+  template:
+    metadata:
+      labels:
+        app: pingpong
+    spec:
+      containers:
+      - name: pingpong
+        image: mluukkai/dwk-app8:v1
+        ports:
+        - containerPort: 3541
+          name: http
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3541
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3541
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"

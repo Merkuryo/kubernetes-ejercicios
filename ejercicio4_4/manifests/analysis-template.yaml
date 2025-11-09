@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: cpu-usage-analysis
+  namespace: default
+spec:
+  metrics:
+  - name: cpu-usage
+    initialDelay: 5m
+    interval: 1m
+    count: 5
+    successCondition: result < 500m
+    failureCondition: result > 500m
+    provider:
+      prometheus:
+        address: http://prometheus.default.svc.cluster.local:9090
+        query: |
+          scalar(
+            sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) * 1000
+          )
