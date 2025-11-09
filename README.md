@@ -60,6 +60,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [5.5](ejercicio5_5) | Platform Comparison (Rancher vs OpenShift) | [v5.5](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.5) |
 | [5.6](ejercicio5_6) | Trying Serverless with Knative Serving | [v5.6](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.6) |
 | [5.7](ejercicio5_7) | Deploy Ping-Pong as Serverless | [v5.7](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.7) |
+| [5.8](ejercicio5_8) | CNCF Cloud Native Landscape Analysis | [v5.8](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.8) |
 
 
 ```
