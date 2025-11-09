@@ -1,6 +1,6 @@
-# Ejercicio 4.4 — Canary Release con AnalysisTemplate
+# Exercise 4.4 — Canary Release con AnalysisTemplate
 
-## Objetivo
+## Objective
 
 Implementar un canary release para la aplicación Ping-pong que:
 - Despliega nuevas versiones de forma gradual (25% → 50% → 75% → 100%)

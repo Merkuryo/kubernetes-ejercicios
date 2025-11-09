@@ -1,6 +1,6 @@
-# Ejercicio 1.13: The Project, Step 7
+# Exercise 1.13: The Project, Step 7
 
-## Descripción
+## Description
 
 Extensión del proyecto agregando funcionalidad de TODO app. El proyecto ahora incluye:
 
@@ -101,7 +101,7 @@ La aplicación inicia con 4 TODOs de ejemplo:
   - Campo requerido
   - Validación en JS y backend
 
-## Notas Técnicas
+## Technical Notes
 
 - Frontend validación con contador de caracteres
 - Backend API RESTful para TODOs

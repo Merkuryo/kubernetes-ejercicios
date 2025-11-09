@@ -1,6 +1,6 @@
-# Ejercicio 3.7 - Entornos Separados por Rama
+# Exercise 3.7 - Entornos Separados por Rama
 
-## Objetivo
+## Objective
 
 Implementar una estrategia de despliegue en Kubernetes donde cada rama de Git se despliega en un namespace separado. Esto permite tener entornos aislados para:
 

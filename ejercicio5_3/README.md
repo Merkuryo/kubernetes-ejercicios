@@ -1,4 +1,4 @@
-# Ejercicio 5.3: Log App, the Service Mesh Edition
+# Exercise 5.3: Log App, the Service Mesh Edition
 
 ## Overview
 

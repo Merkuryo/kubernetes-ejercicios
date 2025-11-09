@@ -1,6 +1,6 @@
-# Ejercicio 5.2 - Getting Started with Istio Service Mesh
+# Exercise 5.2 - Getting Started with Istio Service Mesh
 
-## Objetivo
+## Objective
 
 Introducirse a **Istio Service Mesh** y su nuevo paradigma **Ambient Mode**:
 

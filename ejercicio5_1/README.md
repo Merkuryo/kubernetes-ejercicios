@@ -1,6 +1,6 @@
-# Ejercicio 5.1 - DIY CRD & Controller
+# Exercise 5.1 - DIY CRD & Controller
 
-## Objetivo
+## Objective
 
 Crear un **Custom Resource Definition (CRD)** personalizado llamado `DummySite` y su correspondiente **Custom Controller** que:
 

@@ -1,6 +1,6 @@
-# Ejercicio 1.12: The Project, Step 6
+# Exercise 1.12: The Project, Step 6
 
-## Descripción
+## Description
 
 Extensión del proyecto con funcionalidades adicionales:
 
@@ -8,7 +8,7 @@ Extensión del proyecto con funcionalidades adicionales:
 2. **Ping Pong**: Contador de solicitudes
 3. **Image Caching**: Descarga una imagen aleatoria de Lorem Picsum y la cachea por 10 minutos
 
-## Características
+## Features
 
 - 📸 **Caché de Imagen (10 minutos)**: 
   - Descarga imágenes aleatorias de https://picsum.photos/1200
@@ -91,7 +91,7 @@ La aplicación requiere un volumen compartido montado en `/usr/src/app/data` par
 - Almacenar el log
 - Guardar metadata de la imagen (timestamp de descarga)
 
-## Notas Técnicas
+## Technical Notes
 
 - Las imágenes se cachean por un período de 10 minutos basado en timestamps
 - La metadata de la imagen se almacena en `image-metadata.json` para persistencia

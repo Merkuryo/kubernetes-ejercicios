@@ -1,4 +1,4 @@
-# Ejercicio 3.9 - DBaaS vs DIY: Comparación de Soluciones de Base de Datos
+# Exercise 3.9 - DBaaS vs DIY: Comparación de Soluciones de Base de Datos
 
 ## Introducción
 

@@ -1,6 +1,6 @@
-# Ejercicio 2.2: The Project - Step 8 - Todo Backend Service
+# Exercise 2.2: The Project - Step 8 - Todo Backend Service
 
-## Descripción
+## Description
 
 En este ejercicio implementamos la separación del la aplicación de TODOs en dos servicios:
 

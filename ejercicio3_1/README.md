@@ -1,4 +1,4 @@
-# Ejercicio 3.1: Pingpong GKE
+# Exercise 3.1: Pingpong GKE
 
 ## Objetivos
 

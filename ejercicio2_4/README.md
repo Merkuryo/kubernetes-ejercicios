@@ -1,6 +1,6 @@
-# Ejercicio 2.4: The Project - Step 9 - Project Namespace Organization
+# Exercise 2.4: The Project - Step 9 - Project Namespace Organization
 
-## Descripción
+## Description
 
 En este ejercicio organizamos completamente el proyecto en su propio namespace. Todos los ejercicios relacionados con el proyecto (1.11, 1.12, 1.13, 2.2) ahora se encuentran en el namespace `project`.
 

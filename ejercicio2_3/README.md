@@ -1,6 +1,6 @@
-# Ejercicio 2.3: Keep Them Separated - Namespaces
+# Exercise 2.3: Keep Them Separated - Namespaces
 
-## Descripción
+## Description
 
 En este ejercicio aprendemos a organizar un cluster de Kubernetes usando **Namespaces**. Los namespaces permiten dividir un cluster en clusters virtuales separados, útiles para:
 

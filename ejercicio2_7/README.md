@@ -1,6 +1,6 @@
-# Ejercicio 2.7: Stateful Applications with PostgreSQL
+# Exercise 2.7: Stateful Applications with PostgreSQL
 
-## Descripción
+## Description
 
 En este ejercicio aprendemos a usar **StatefulSets** en Kubernetes para aplicaciones con estado (como bases de datos) y hacer que la aplicación **ping-pong** guarde su contador en PostgreSQL en lugar de mantenerlo en memoria.
 

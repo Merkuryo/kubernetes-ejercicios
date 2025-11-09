@@ -1,6 +1,6 @@
-# Ejercicio 2.6: Removing Hardcoded Values and Configuration Management
+# Exercise 2.6: Removing Hardcoded Values and Configuration Management
 
-## Descripción
+## Description
 
 En este ejercicio eliminamos **todos los valores hardcodeados** del proyecto y movemos la configuración a **ConfigMaps**. Esto es una práctica esencial para tener aplicaciones configurables en Kubernetes.
 

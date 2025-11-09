@@ -1,6 +1,6 @@
-# Ejercicio 3.8 - Cleanup Workflow: Eliminar Namespaces al Borrar Ramas
+# Exercise 3.8 - Cleanup Workflow: Eliminar Namespaces al Borrar Ramas
 
-## Objetivo
+## Objective
 
 Implementar un workflow de GitHub Actions que automáticamente elimine los namespaces de Kubernetes cuando se borra una rama en el repositorio. Esto completa la estrategia de multi-ambiente por rama, asegurando que no haya namespaces huérfanos o recursos perdidos en el cluster.
 

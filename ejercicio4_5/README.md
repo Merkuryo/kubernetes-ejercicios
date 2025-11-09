@@ -1,6 +1,6 @@
-# Ejercicio 4.5 — The Project, Step 22 — "Done" Field Implementation
+# Exercise 4.5 — The Project, Step 22 — "Done" Field Implementation
 
-## Objetivo
+## Objective
 
 Añadir funcionalidad de marcar todos como "completados" implementando:
 - Campo booleano `done` en la tabla de base de datos

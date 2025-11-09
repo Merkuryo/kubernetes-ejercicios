@@ -1,4 +1,4 @@
-# Ejercicio 4.2 — Readiness & Liveness Probes (The Project)
+# Exercise 4.2 — Readiness & Liveness Probes (The Project)
 
 Objetivo
 

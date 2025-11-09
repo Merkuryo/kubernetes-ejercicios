@@ -1,6 +1,6 @@
-# Ejercicio 4.7: Baby Steps to GitOps
+# Exercise 4.7: Baby Steps to GitOps
 
-## Objetivo
+## Objective
 
 Implementar GitOps en un cluster de Kubernetes usando ArgoCD. La aplicación log-output se desplegará automáticamente cuando se hagan cambios en el repositorio.
 

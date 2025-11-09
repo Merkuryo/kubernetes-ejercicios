@@ -1,6 +1,6 @@
-# Ejercicio 2.9: Jobs and CronJobs - Auto-generate Wikipedia TODOs
+# Exercise 2.9: Jobs and CronJobs - Auto-generate Wikipedia TODOs
 
-## Descripción
+## Description
 
 En este ejercicio aprendemos a usar **CronJobs** en Kubernetes para ejecutar tareas **periódicamente**. La aplicación crea automáticamente TODOs cada hora con artículos aleatorios de Wikipedia para recordar al usuario que lea algo nuevo.
 

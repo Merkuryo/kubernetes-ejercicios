@@ -1,6 +1,6 @@
-# Ejercicio 4.6: The Project Step 23 - NATS Broadcaster Service
+# Exercise 4.6: The Project Step 23 - NATS Broadcaster Service
 
-## Objetivo
+## Objective
 
 Implementar una arquitectura de microservicios con NATS como sistema de mensajería para broadcasting de eventos de TODO.
 
@@ -45,7 +45,7 @@ La aplicación está dividida en tres servicios:
     └─────────────────────────────────────────────┘
 ```
 
-## Características
+## Features
 
 ### Backend actualizado (`backend/src/index.js`)
 

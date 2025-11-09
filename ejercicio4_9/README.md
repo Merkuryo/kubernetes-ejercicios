@@ -1,6 +1,6 @@
 # Exercise 4.9: The Project - Multi-environment Setup with Kustomize
 
-## Objetivo
+## Objective
 
 Implementar un setup de **múltiples ambientes** (staging y production) para "The Project" utilizando **Kustomize overlays** y **ArgoCD**, donde:
 

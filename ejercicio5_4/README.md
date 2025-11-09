@@ -1,4 +1,4 @@
-# Ejercicio 5.4: Wikipedia with Init and Sidecar
+# Exercise 5.4: Wikipedia with Init and Sidecar
 
 ## Overview
 

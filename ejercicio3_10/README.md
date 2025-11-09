@@ -1,6 +1,6 @@
-# Ejercicio 3.10 - PostgreSQL Backup to Google Cloud Storage
+# Exercise 3.10 - PostgreSQL Backup to Google Cloud Storage
 
-## Objetivo
+## Objective
 
 Crear un CronJob en Kubernetes que automáticamente haga backup de la base de datos PostgreSQL cada 24 horas y guarde los backups en Google Cloud Storage (GCS).
 

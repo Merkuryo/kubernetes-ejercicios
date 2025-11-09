@@ -1,6 +1,6 @@
-# Ejercicio 1.11: Persisting Data
+# Exercise 1.11: Persisting Data
 
-## Descripción
+## Description
 
 Este ejercicio implementa la compartición de datos entre dos contenedores en un mismo pod usando un **PersistentVolume (PV)** y un **PersistentVolumeClaim (PVC)**.
 

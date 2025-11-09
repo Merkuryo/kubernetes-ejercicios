@@ -1,4 +1,4 @@
-# Ejercicio 2.10: Monitoring with Prometheus and Grafana
+# Exercise 2.10: Monitoring with Prometheus and Grafana
 
 ## Objectives
 

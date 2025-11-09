@@ -1,6 +1,6 @@
-# Ejercicio 4.1 - Readiness Probe
+# Exercise 4.1 - Readiness Probe
 
-## Objetivo
+## Objective
 
 Crear ReadinessProbes para las aplicaciones Ping-pong y Log-output:
 

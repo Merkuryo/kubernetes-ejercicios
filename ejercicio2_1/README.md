@@ -1,6 +1,6 @@
-# Ejercicio 2.1: Connecting Pods
+# Exercise 2.1: Connecting Pods
 
-## Descripción
+## Description
 
 Este ejercicio demuestra la comunicación entre pods usando HTTP en lugar de compartir volúmenes. El objetivo es conectar la aplicación Log Output con la aplicación Ping Pong mediante un endpoint HTTP.
 

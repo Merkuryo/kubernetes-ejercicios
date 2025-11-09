@@ -1,6 +1,6 @@
-# Ejercicio 4.8: The Project Step 24 - GitOps
+# Exercise 4.8: The Project Step 24 - GitOps
 
-## Objetivo
+## Objective
 
 Mover "The Project" (backend + ping-pong + log-output + postgres) a GitOps.
 

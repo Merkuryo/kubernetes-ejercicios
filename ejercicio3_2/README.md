@@ -1,4 +1,4 @@
-# Ejercicio 3.2: Back to Ingress
+# Exercise 3.2: Back to Ingress
 
 ## Objetivos
 

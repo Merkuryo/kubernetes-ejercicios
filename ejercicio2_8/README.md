@@ -1,6 +1,6 @@
-# Ejercicio 2.8: The Project, Step 11 - TODO App with Database
+# Exercise 2.8: The Project, Step 11 - TODO App with Database
 
-## Descripción
+## Description
 
 En este ejercicio completamos la aplicación TODO con **persistencia en base de datos**. Los TODOs ahora se almacenan en PostgreSQL en lugar de memoria, lo que significa:
 

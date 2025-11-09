@@ -1,6 +1,6 @@
-# Ejercicio 3.11 - Resource Requests and Limits for Scaling
+# Exercise 3.11 - Resource Requests and Limits for Scaling
 
-## Objetivo
+## Objective
 
 Establecer solicitudes y límites de recursos sensatos (resource requests y limits) para todas las aplicaciones del proyecto. Esto es fundamental para:
 

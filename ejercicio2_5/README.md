@@ -1,6 +1,6 @@
-# Ejercicio 2.5: Documentation and ConfigMaps
+# Exercise 2.5: Documentation and ConfigMaps
 
-## Descripción
+## Description
 
 En este ejercicio aprendemos a usar **ConfigMaps** en Kubernetes para pasar configuraciones a los pods. Un ConfigMap permite:
 

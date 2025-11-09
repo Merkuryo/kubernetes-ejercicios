@@ -1,6 +1,6 @@
-# Ejercicio 3.12 - GKE Monitoring and Logging
+# Exercise 3.12 - GKE Monitoring and Logging
 
-## Objetivo
+## Objective
 
 Configurar y utilizar los sistemas de monitoreo y logging integrados en Google Kubernetes Engine (GKE) para:
 
