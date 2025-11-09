@@ -1,0 +1,103 @@
+---
+# PostgreSQL Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-postgres
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios
+    targetRevision: main
+    path: ejercicio4_8/postgres/manifests
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# Backend Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-backend
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios
+    targetRevision: main
+    path: ejercicio4_8/backend/manifests
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# Ping-Pong Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-ping-pong
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios
+    targetRevision: main
+    path: ejercicio4_8/ping-pong/manifests
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# Log-Output Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: the-project-log-output
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/Merkuryo/kubernetes-ejercicios
+    targetRevision: main
+    path: ejercicio4_8/log-output/manifests
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

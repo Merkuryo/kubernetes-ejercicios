@@ -1,0 +1,54 @@
+name: Publish The Project Applications
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ejercicio4_8/**'
+
+jobs:
+  publish:
+    name: Build, Push, and Update Kustomization
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ejercicio4_8/backend
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/the-project-backend:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/the-project-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v2
+
+      - name: Update backend kustomization.yaml
+        run: |
+          cd ${{ github.workspace }}/ejercicio4_8/backend/manifests
+          kustomize edit set image PROJECT/BACKEND=${{ secrets.DOCKERHUB_USERNAME }}/the-project-backend:${{ github.sha }}
+
+      - name: Commit kustomization changes to GitHub
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'ejercicio4_8/backend/manifests/kustomization.yaml'
+          message: "Build ${{ github.sha }}: Update backend image"
+          push: true
+          author_name: "GitOps Bot"
+          author_email: "gitops@kubernetes.local"
