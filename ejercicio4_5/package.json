@@ -1,0 +1,18 @@
+{
+  "name": "todos-backend-app",
+  "version": "1.0.0",
+  "description": "Todo backend API with PostgreSQL - Step 22 (Done field)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "pg": "^8.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
