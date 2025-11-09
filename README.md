@@ -57,6 +57,7 @@ Repository de ejercicios de Kubernetes del curso "DevOps with Kubernetes". Cada 
 | [5.2](ejercicio5_2) | Getting Started with Istio Service Mesh (Ambient Mode) | [v5.2](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.2) |
 | [5.3](ejercicio5_3) | Log App, the Service Mesh Edition | [v5.3](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.3) |
 | [5.4](ejercicio5_4) | Wikipedia with Init and Sidecar | [v5.4](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.4) |
+| [5.5](ejercicio5_5) | Platform Comparison (Rancher vs OpenShift) | [v5.5](https://github.com/Merkuryo/kubernetes-ejercicios/releases/tag/v5.5) |
 
 
 ```
